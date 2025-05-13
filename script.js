@@ -186,6 +186,7 @@ startTimer(50);
 
 
 //Functionalities to add
+//Display full questions with the answered options
 //Missing skip button functionality and 
 //The score is updated immediately
 //when i go previous question the selected radio button is disabled
