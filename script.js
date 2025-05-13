@@ -185,7 +185,7 @@ showQuestion();
 startTimer(50); 
 
 
-
+//Functionalities to add
 //Missing skip button functionality and 
 //The score is updated immediately
 //when i go previous question the selected radio button is disabled
