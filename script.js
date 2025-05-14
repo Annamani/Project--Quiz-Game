@@ -116,11 +116,11 @@ function selectAnswer(selectedValue) {
     score++;
   }
   if (currentQuestionIndex < quizData.length) {
-      // showQuestion();
+    // showQuestion();
   } else {
     nextButton.disabled = quizData.length === 0;
     // showQuestion();
-   }
+  }
 }
 
 function showResult() {
@@ -165,7 +165,7 @@ function showResult() {
 // }
 nextButton.addEventListener("click", () => {
   currentQuestionIndex++;
-  if (currentQuestionIndex < quizData.length-1) {
+  if (currentQuestionIndex < quizData.length - 1) {
     showQuestion();
   } else {
     nextButton.disabled = quizData.length === 0;
@@ -180,15 +180,20 @@ previousButton.addEventListener("click", () => {
   } else {
     showResult();
   }
-}); 
+});
 skipButton.addEventListener("click", () => {
-    currentQuestionIndex++;
-    if (currentQuestionIndex < quizData.length) {
-      showQuestion();
-    } else {
-      showResult();
-    }
-  });
+  currentQuestionIndex++;
+  if (currentQuestionIndex < quizData.length) {
+    showQuestion();
+  } else {
+    showResult();
+  }
+});
 
 showQuestion();
 // startTimer(10); // Start the timer with 120 seconds (2 minutes)
+
+
+//Add show results with the user selected answer along with actual correct answer
+//try to add another button to show the correct answer with name view results when the score is displayed in the end of quiz
+//Have user name fields and show the score with the name
