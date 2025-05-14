@@ -92,8 +92,8 @@ function showQuestion() {
   scoreElement.innerText = score;
   questionCounterElement.innerHTML = `Question ${currentQuestionIndex + 1} / ${quizData.length
     }`;
-  console.log(questionCounterElement);
-  console.log(question, options);
+  // console.log(questionCounterElement);
+  // console.log(question, options);
   questionElement.innerText = question;
   optionsElement.innerHTML = ""; // Clear previous options
   options.forEach((option) => {
