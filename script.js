@@ -1,60 +1,78 @@
 const quizData = [
-  {
+  { 
+    index:0,
     question: "What is Dannebrog?",
     options: ["The Danish flag ", "The Danish Anthem ", "The Danish currency "],
     answer: "The Danish flag ",
   },
   {
+    index:1,
     question: "What is the capital of Denmark?",
     options: ["Copenhagen", "Aarhus", "Odense"],
     answer: "Copenhagen",
   },
   {
+    index:2,
     question: "What is the currency of Denmark?",
     options: ["Danish Krone", "Euro", "Danish Dollar"],
-    answer: "Danish Krone",
+    //radioButtons: [radioButton1, radioButton2, radioButton3],
+    //Next: [false, false, true] - one of them always true
+    //Skip: [false, false, false]
+    answeredCorrectly: false,
+    userAnswer: "",
+    correctAnswer: "Danish Krone",
   },
   {
+    index:3,
     question: "Which country was Denmark forced to relinquish to Sweden at the end of the Napoleonic Wars in 1814?",
     options: ["Norway", "Iceland", "Greenland"],
+    answeredCorrectly: false,
     answer: "Norway",
   },
   {
+    index:4,
     question: "On January 1st, 2007, Denmark was divided into regions. How many?",
     options: ["7", "13", "5"],
     answer: "5",
   },
   {
+    index:5,
     question: "Which political party emerged in 1870 as a part of the labour movement?",
     options: ["The Social Liberals (Radikale Venstre)", "The Socialist People's Party (Socialistisk Folkeparti)", "The Social Democrats (Socialdemokratiet)"],
     answer: "The Social Democrats (Socialdemokratiet)",
   },
   {
+    index:6,
     question: "Which of the following persons is known as a key figure amongst the Skagen painters?",
     options: ["Berthel Thorvaldsen","C. C. Eckersberg","P. S. KrÃ¸yer"],
     answer: "P. S. KrÃ¸yer",
   },
   {
+    index:7,
     question: "What is the average age for women having their first child in Denmark?",
     options: ["24","29","19"],
     answer: "29",
   },
   {
+    index:8,
     question: "In which decade was abortion legalised in Denmark?",
     options: ["1930s","1950s","1970s"],
     answer: "1970s",
   },
   {
+    index:9,
     question: "Until when was Greenland a Danish colony?",
     options: ["2005","1901","1953"],
     answer: "1953",
   },
   {
+    index:10,
     question: "On which day does the Queen give a live televised speech to the country?",
     options: ["New Years Eve","Christmas Eve","Queen Birthday"],
     answer: "New Years Eve",
   },
   {
+    index:11,
     question: "In which sport did the Danish women's national team finish second in the 2017 European Championships?",
     options: ["Handball","Football","Volleyball"],
     answer: "Football",
@@ -114,13 +132,16 @@ function selectAnswer(selectedValue) {
   }
   currentQuestionIndex++;
   if (currentQuestionIndex < quizData.length) {
-    showQuestion();
+    //showQuestion();
   } else {
-    showResult();
+    //showResult();
   }
 }
 
 function showResult() {
+  nextButton.disabled = true;
+  skipButton.disabled = true;
+  previousButton.disabled = true;
   const resultMessage = document.createElement("div");
   const scorePercentage = ((score / quizData.length) * 100).toFixed(2);
   questionCounterElement.innerText = "Quiz Completed!";
@@ -128,6 +149,7 @@ function showResult() {
   questionElement.innerHTML = "";
   optionsElement.innerHTML = "";
   scoreElement.innerText = score;
+  displayAnsweredQuest();
   //one test case is failing on the first attempt bcz the score is 0
   if (score >= quizData.length / 2) {
     scoreElement.innerText = score;
@@ -143,17 +165,20 @@ function showResult() {
     optionsElement.appendChild(resultMessage);
   }
 }
-function startTimer(duration) {
-  let timeLeft = duration;
-  timer = setInterval(() => {
-    timeLeft--;
-    if (timeLeft >= 0) {
-      timerElement.textContent = timeLeft;
-    } else {
-      showResult();
-    }
-  }, 1000);
-}
+// function startTimer(duration) {
+//   let timeLeft = duration;
+//   timer = setInterval(() => {
+//     timeLeft--;
+//     if (timeLeft >= 0) {
+//       timerElement.textContent = timeLeft;
+//     } else {
+//       showResult();
+//       nextButton.disabled = false;
+//       skipButton.disabled = false;
+//       previousButton.disabled = false;
+//     }
+//   }, 1000);
+// }
 nextButton.addEventListener("click", () => {
   currentQuestionIndex++;
   if (currentQuestionIndex < quizData.length) {
@@ -181,12 +206,16 @@ previousButton.addEventListener("click", () => {
 //     }
 //   });
 
+
+//Display full questions with the answered options
+function displayAnsweredQuest(){
+
+}
 showQuestion();
-startTimer(50); 
+startTimer(5); 
 
 
 //Functionalities to add
-//Display full questions with the answered options
 //Missing skip button functionality and 
 //The score is updated immediately
 //when i go previous question the selected radio button is disabled
