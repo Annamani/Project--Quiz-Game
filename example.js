@@ -1,15 +1,18 @@
 const quizData = [
-  {
+  { 
+    index:0,
     question: "What is Dannebrog?",
     options: ["The Danish flag ", "The Danish Anthem ", "The Danish currency "],
     answer: "The Danish flag ",
   },
   {
+    index:1,
     question: "What is the capital of Denmark?",
     options: ["Copenhagen", "Aarhus", "Odense"],
     answer: "Copenhagen",
   },
   {
+    index:2,
     question: "What is the currency of Denmark?",
     options: ["Danish Krone", "Euro", "Danish Dollar"],
     //radioButtons: [radioButton1, radioButton2, radioButton3],
@@ -17,52 +20,61 @@ const quizData = [
     //Skip: [false, false, false]
     // answeredCorrectly: false,
     // userAnswer: "",
-    answer: "Danish Krone",
+    // correctAnswer: "Danish Krone",
   },
   {
+    index:3,
     question: "Which country was Denmark forced to relinquish to Sweden at the end of the Napoleonic Wars in 1814?",
     options: ["Norway", "Iceland", "Greenland"],
     answeredCorrectly: false,
     answer: "Norway",
   },
   {
+    index:4,
     question: "On January 1st, 2007, Denmark was divided into regions. How many?",
     options: ["7", "13", "5"],
     answer: "5",
   },
   {
+    index:5,
     question: "Which political party emerged in 1870 as a part of the labour movement?",
     options: ["The Social Liberals (Radikale Venstre)", "The Socialist People's Party (Socialistisk Folkeparti)", "The Social Democrats (Socialdemokratiet)"],
     answer: "The Social Democrats (Socialdemokratiet)",
   },
   {
+    index:6,
     question: "Which of the following persons is known as a key figure amongst the Skagen painters?",
-    options: ["Berthel Thorvaldsen", "C. C. Eckersberg", "P. S. KrÃ¸yer"],
+    options: ["Berthel Thorvaldsen","C. C. Eckersberg","P. S. KrÃ¸yer"],
     answer: "P. S. KrÃ¸yer",
   },
   {
+    index:7,
     question: "What is the average age for women having their first child in Denmark?",
-    options: ["24", "29", "19"],
+    options: ["24","29","19"],
     answer: "29",
   },
   {
+    index:8,
     question: "In which decade was abortion legalised in Denmark?",
-    options: ["1930s", "1950s", "1970s"],
+    options: ["1930s","1950s","1970s"],
     answer: "1970s",
   },
   {
+    index:9,
     question: "Until when was Greenland a Danish colony?",
-    options: ["2005", "1901", "1953"],
+    options: ["2005","1901","1953"],
     answer: "1953",
   },
   {
+    index:10,
     question: "On which day does the Queen give a live televised speech to the country?",
-    options: ["New Years Eve", "Christmas Eve", "Queen Birthday"],
+    options: ["New Years Eve","Christmas Eve","Queen Birthday"],
     answer: "New Years Eve",
   },
   {
+    index:11,
     question: "In which sport did the Danish women's national team finish second in the 2017 European Championships?",
-    options: ["Handball", "Football", "Volleyball"],
+    options: ["Handball","Football","Volleyball"],
     answer: "Football",
   },
 ];
@@ -81,6 +93,7 @@ let currentQuestionIndex = 0;
 let score = 0;
 let timer;
 const timerValue = 120; //2 minutes for just to check for the quiz
+let userAnswer=[];
 
 // console.log("Quiz started!");
 
@@ -90,9 +103,9 @@ function showQuestion() {
   const question = quizData[currentQuestionIndex].question;
   const options = quizData[currentQuestionIndex].options;
   scoreElement.innerText = score;
-  questionCounterElement.innerHTML = `Question ${currentQuestionIndex + 1} / ${quizData.length
-    }`;
-  console.log(questionCounterElement);
+  questionCounterElement.innerHTML = `Question ${currentQuestionIndex + 1} / ${
+    quizData.length
+  }`;
   console.log(question, options);
   questionElement.innerText = question;
   optionsElement.innerHTML = ""; // Clear previous options
@@ -100,9 +113,6 @@ function showQuestion() {
     const radioButton = document.createElement("input");
     radioButton.type = "radio";
     radioButton.innerHTML = option;
-
-    //input elements themselves don't display text;
-    //instead, you should use <label> elements to provide the text for each option.
     const label = document.createElement("label");
     label.innerText = option;
     label.appendChild(radioButton); // Append the radio button to the label
@@ -111,6 +121,7 @@ function showQuestion() {
     radioButton.addEventListener("click", () => selectAnswer(option));
   });
   previousButton.disabled = currentQuestionIndex === 0;
+  nextButton.disabled = currentQuestionIndex === quizData.length - 1;
 }
 
 function selectAnswer(selectedValue) {
@@ -153,23 +164,23 @@ function showResult() {
     optionsElement.appendChild(resultMessage);
   }
 }
-// function startTimer(duration) {
-//   let timeLeft = duration;
-//   timer = setInterval(() => {
-//     timeLeft--;
-//     if (timeLeft >= 0) {
-//       timerElement.textContent = timeLeft;
-//     } else {
-//       showResult();
-//       nextButton.disabled = false;
-//       skipButton.disabled = false;
-//       previousButton.disabled = false;
-//     }
-//   }, 1000);
-// }
+function startTimer(duration) {
+  let timeLeft = duration;
+  timer = setInterval(() => {
+    timeLeft--;
+    if (timeLeft >= 0) {
+      timerElement.textContent = timeLeft;
+    } else {
+      showResult();
+      nextButton.disabled = false;
+      skipButton.disabled = false;
+      previousButton.disabled = false;
+    }
+  }, 1000);
+}
 nextButton.addEventListener("click", () => {
   currentQuestionIndex++;
-  if (currentQuestionIndex < quizData.length ) {
+  if (currentQuestionIndex < quizData.length-1) {
     showQuestion();
   } else {
     nextButton.disabled = quizData.length === 0;
@@ -186,24 +197,29 @@ previousButton.addEventListener("click", () => {
   }
 });
 // skipButton.addEventListener("click", () => {
+//   userAnswers[currentQuestionIndex] = null;
+//   if (currentQuestionIndex < quizData.length - 1) {
 //     currentQuestionIndex++;
-//     if (currentQuestionIndex < quizData.length) {
-//       showQuestion();
-//     } else {
-//       showResult();
-//     }
+//     showQuestion();
+//   }
+// });
+
+// function displayAnsweredQuest() {
+//   const answeredQuestions = quizData.filter((question) => question.answeredCorrectly);
+//   const answeredQuestionsElement = document.createElement("div");
+//   answeredQuestionsElement.innerHTML = "<h3>Answered Questions:</h3>";
+//   answeredQuestions.forEach((question) => {
+//     const questionElement = document.createElement("p");
+//     questionElement.innerText = `Question: ${question.question}, Answer: ${question.userAnswer}`;
+//     answeredQuestionsElement.appendChild(questionElement);
 //   });
-
-
-//Display full questions with the answered options
-function displayAnsweredQuest() {
-
-}
+//   optionsElement.appendChild(answeredQuestionsElement);
+// }
 showQuestion();
-// startTimer(5);
+startTimer(50); 
 
 
 //Functionalities to add
-//Missing skip button functionality and
+//Missing skip button functionality and 
 //The score is updated immediately
 //when i go previous question the selected radio button is disabled
