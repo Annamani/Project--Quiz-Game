@@ -22,7 +22,7 @@ const quizData = [
   {
     question: "Which country was Denmark forced to relinquish to Sweden at the end of the Napoleonic Wars in 1814?",
     options: ["Norway", "Iceland", "Greenland"],
-    answeredCorrectly: false,
+    // answeredCorrectly: false,
     answer: "Norway",
   },
   {
@@ -92,17 +92,13 @@ function showQuestion() {
   scoreElement.innerText = score;
   questionCounterElement.innerHTML = `Question ${currentQuestionIndex + 1} / ${quizData.length
     }`;
-  // console.log(questionCounterElement);
-  // console.log(question, options);
+  console.log(question, options);
   questionElement.innerText = question;
   optionsElement.innerHTML = ""; // Clear previous options
   options.forEach((option) => {
     const radioButton = document.createElement("input");
     radioButton.type = "radio";
-    radioButton.innerHTML = option;
-
-    //input elements themselves don't display text;
-    //instead, you should use <label> elements to provide the text for each option.
+    radioButton.innerText = option;
     const label = document.createElement("label");
     label.innerText = option;
     label.appendChild(radioButton); // Append the radio button to the label
@@ -111,6 +107,7 @@ function showQuestion() {
     radioButton.addEventListener("click", () => selectAnswer(option));
   });
   previousButton.disabled = currentQuestionIndex === 0;
+  // nextButton.disabled = currentQuestionIndex === quizData.length - 1;
 }
 
 function selectAnswer(selectedValue) {
@@ -118,12 +115,12 @@ function selectAnswer(selectedValue) {
   if (selectedValue === answer) {
     score++;
   }
-  currentQuestionIndex++;
   if (currentQuestionIndex < quizData.length) {
-    //showQuestion();
+      // showQuestion();
   } else {
-    //showResult();
-  }
+    nextButton.disabled = quizData.length === 0;
+    // showQuestion();
+   }
 }
 
 function showResult() {
@@ -137,21 +134,22 @@ function showResult() {
   questionElement.innerHTML = "";
   optionsElement.innerHTML = "";
   scoreElement.innerText = score;
-  displayAnsweredQuest();
-  //one test case is failing on the first attempt bcz the score is 0
+  // one test case is failing on the first attempt bcz the score is 0
   if (score >= quizData.length / 2) {
     scoreElement.innerText = score;
     resultMessage.innerText = `Congratulations! You scored ${scorePercentage}%`;
     resultMessage.style.color = "green";
     timerElement.innerText = "0";
     optionsElement.appendChild(resultMessage);
-  } else {
+  }
+  else {
     scoreElement.innerText = score;
     resultMessage.innerText = `Sorry !! You have failed the exam`;
     resultMessage.style.color = "red";
     timerElement.innerText = "0";
     optionsElement.appendChild(resultMessage);
   }
+
 }
 // function startTimer(duration) {
 //   let timeLeft = duration;
@@ -159,24 +157,22 @@ function showResult() {
 //     timeLeft--;
 //     if (timeLeft >= 0) {
 //       timerElement.textContent = timeLeft;
-//     } else {
+//     } 
+//     else {
 //       showResult();
-//       nextButton.disabled = false;
-//       skipButton.disabled = false;
-//       previousButton.disabled = false;
 //     }
 //   }, 1000);
 // }
 nextButton.addEventListener("click", () => {
   currentQuestionIndex++;
-  if (currentQuestionIndex < quizData.length ) {
+  if (currentQuestionIndex < quizData.length-1) {
     showQuestion();
   } else {
     nextButton.disabled = quizData.length === 0;
     showResult();
   }
 });
-//Optional Buttons to go to previous question and skip the question
+
 previousButton.addEventListener("click", () => {
   currentQuestionIndex--;
   if (currentQuestionIndex >= 0) {
@@ -184,26 +180,15 @@ previousButton.addEventListener("click", () => {
   } else {
     showResult();
   }
-});
-// skipButton.addEventListener("click", () => {
-//     currentQuestionIndex++;
-//     if (currentQuestionIndex < quizData.length) {
-//       showQuestion();
-//     } else {
-//       showResult();
-//     }
-//   });
+}); 
+skipButton.addEventListener("click", () => {
+    currentQuestionIndex++;
+    if (currentQuestionIndex < quizData.length) {
+      showQuestion();
+    } else {
+      showResult();
+    }
+  });
 
-
-//Display full questions with the answered options
-function displayAnsweredQuest() {
-
-}
 showQuestion();
-// startTimer(5);
-
-
-//Functionalities to add
-//Missing skip button functionality and
-//The score is updated immediately
-//when i go previous question the selected radio button is disabled
+// startTimer(10); // Start the timer with 120 seconds (2 minutes)
