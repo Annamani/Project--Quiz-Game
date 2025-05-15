@@ -100,6 +100,7 @@ function showQuestion() {
     const radioButton = document.createElement("input");
     radioButton.type = "radio";
     radioButton.innerText = option;
+    radioButton.name = "answer"; 
     const label = document.createElement("label");
     label.innerText = option;
     label.appendChild(radioButton); // Append the radio button to the label
@@ -107,12 +108,6 @@ function showQuestion() {
     optionsElement.appendChild(label); // Append the label to the options element
     radioButton.addEventListener("click", () => selectAnswer(option));
   });
-  if (currentQuestionIndex === quizData.length - 1) {
-    nextButton.innerText = "Finish";
-    skipButton.disabled = true;
-  } else {
-    nextButton.innerText = "Next";
-  }
   if (currentQuestionIndex === 0) {
     previousButton.disabled = true;
   } else {
@@ -189,11 +184,17 @@ function showCorrectAnswers() {
 // }
 nextButton.addEventListener("click", () => {
   currentQuestionIndex++;
-  if (currentQuestionIndex < quizData.length - 1) {
+  if (currentQuestionIndex < quizData.length) {
     showQuestion();
   } else {
     nextButton.disabled = quizData.length === 0;
     showResult();
+  }
+  if (currentQuestionIndex === quizData.length - 1) {
+    nextButton.innerText = "Finish";
+    skipButton.disabled = true;
+  } else {
+    nextButton.innerText = "Next";
   }
 });
 
