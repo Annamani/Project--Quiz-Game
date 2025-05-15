@@ -87,6 +87,7 @@ let userAnswer =Array(quizData.length).fill(null);
 
 // console.log(questionCounterElement);
 
+
 function showQuestion() {
   const question = quizData[currentQuestionIndex].question;
   const options = quizData[currentQuestionIndex].options;
@@ -220,6 +221,4 @@ showQuestion();
 startTimer(50);
 
 
-//Add show results with the user selected answer along with actual correct answer
-//try to add another button to show the correct answer with name view results when the score is displayed in the end of quiz
 //Have user name fields and show the score with the name
