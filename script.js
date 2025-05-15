@@ -67,7 +67,7 @@ const quizData = [
   },
 ];
 //Shuffle the questions
-quizData.sort(() => Math.random() - 0.5);
+// quizData.sort(() => Math.random() - 0.5);
 // console.log(quizData.sort(() => Math.random() - 0.5));
 const questionCounterElement = document.getElementById("question-counter");
 const questionElement = document.getElementById("question");
@@ -106,8 +106,17 @@ function showQuestion() {
     optionsElement.appendChild(label); // Append the label to the options element
     radioButton.addEventListener("click", () => selectAnswer(option));
   });
-  previousButton.disabled = currentQuestionIndex === 0;
-  // nextButton.disabled = currentQuestionIndex === quizData.length - 1;
+  if (currentQuestionIndex === quizData.length - 1) {
+    nextButton.innerText = "Finish";
+    skipButton.disabled = true;
+  } else {
+    nextButton.innerText = "Next";
+  }
+  if (currentQuestionIndex === 0) {
+    previousButton.disabled = true;
+  } else {
+    previousButton.disabled = false;
+  }
 }
 
 function selectAnswer(selectedValue) {
@@ -185,6 +194,7 @@ skipButton.addEventListener("click", () => {
   currentQuestionIndex++;
   if (currentQuestionIndex < quizData.length) {
     showQuestion();
+    
   } else {
     showResult();
   }
