@@ -77,11 +77,12 @@ const timerElement = document.getElementById("timer-value");
 const previousButton = document.getElementById("previous-button");
 const nextButton = document.getElementById("next-button");
 const skipButton = document.getElementById("skip-button");
+const resultElement = document.getElementById("results");
 let currentQuestionIndex = 0;
 let score = 0;
 let timer;
 const timerValue = 120; //2 minutes for just to check for the quiz
-
+let userAnswer =Array(quizData.length).fill(null); 
 // console.log("Quiz started!");
 
 // console.log(questionCounterElement);
