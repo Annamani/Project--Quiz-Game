@@ -32,7 +32,7 @@ const quizData = [
   },
   {
     question: "Which political party emerged in 1870 as a part of the labour movement?",
-    options: ["The Social Liberals (Radikale Venstre)", "The Socialist People's Party (Socialistisk Folkeparti)", "The Social Democrats (Socialdemokratiet)"],
+    options: ["The Social Liberals (Radikale Venstre)", "The Socialist People's Party (Socialistisk Folkeparti)","The Social Democrats (Socialdemokratiet)"],
     answer: "The Social Democrats (Socialdemokratiet)",
   },
   {
@@ -103,8 +103,8 @@ function showQuestion() {
     radioButton.name = "answer"; 
     const label = document.createElement("label");
     label.innerText = option;
-    label.appendChild(radioButton); // Append the radio button to the label
-    optionsElement.appendChild(radioButton);
+    label.prepend(radioButton); 
+    // optionsElement.appendChild(radioButton);
     optionsElement.appendChild(label); // Append the label to the options element
     radioButton.addEventListener("click", () => selectAnswer(option));
   });
