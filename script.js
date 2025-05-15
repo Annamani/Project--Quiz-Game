@@ -170,18 +170,18 @@ function showCorrectAnswers() {
     resultElement.appendChild(questionElement);
   });
 }
-// function startTimer(duration) {
-//   let timeLeft = duration;
-//   timer = setInterval(() => {
-//     timeLeft--;
-//     if (timeLeft >= 0) {
-//       timerElement.textContent = timeLeft;
-//     } 
-//     else {
-//       showResult();
-//     }
-//   }, 1000);
-// }
+function startTimer(duration) {
+  let timeLeft = duration;
+  timer = setInterval(() => {
+    timeLeft--;
+    if (timeLeft >= 0) {
+      timerElement.textContent = timeLeft;
+    } 
+    else {
+      showResult();
+    }
+  }, 1000);
+}
 nextButton.addEventListener("click", () => {
   currentQuestionIndex++;
   if (currentQuestionIndex < quizData.length) {
@@ -217,7 +217,7 @@ skipButton.addEventListener("click", () => {
 });
 
 showQuestion();
-// startTimer(10); // Start the timer with 120 seconds (2 minutes)
+startTimer(30); // Start the timer with 120 seconds (2 minutes)
 
 
 //Add show results with the user selected answer along with actual correct answer
