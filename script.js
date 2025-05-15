@@ -123,6 +123,7 @@ function showQuestion() {
 function selectAnswer(selectedValue) {
   const answer = quizData[currentQuestionIndex].answer;
   if (selectedValue === answer) {
+    userAnswer[currentQuestionIndex] = selectedValue;
     score++;
   }
   if (currentQuestionIndex < quizData.length) {
@@ -159,7 +160,20 @@ function showResult() {
     timerElement.innerText = "0";
     optionsElement.appendChild(resultMessage);
   }
-
+showCorrectAnswers();
+}
+function showCorrectAnswers() {
+ resultElement.innerHTML = "<h2>Quiz Results: </h2>";
+  quizData.forEach((question, index) => {
+    const userAns= userAnswer[index]||"Not Attempted";
+    const isCorrect = userAns === question.answer ? "Correct" : "Incorrect";
+    resultElement.innerHTML += `<p>Question ${index + 1}: ${question.question}</p>`;
+    resultElement.innerHTML += `<p>Your Answer: ${userAns}</p>`;
+    resultElement.innerHTML += `<p>Correct Answer: ${question.answer}</p>`;
+    resultElement.innerHTML += `<p>Status: ${isCorrect}</p>`;
+    resultElement.innerHTML += "<hr>";
+    resultElement.appendChild(questionElement);
+  });
 }
 // function startTimer(duration) {
 //   let timeLeft = duration;
