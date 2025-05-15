@@ -217,7 +217,7 @@ skipButton.addEventListener("click", () => {
 });
 
 showQuestion();
-startTimer(30); // Start the timer with 120 seconds (2 minutes)
+startTimer(50);
 
 
 //Add show results with the user selected answer along with actual correct answer
