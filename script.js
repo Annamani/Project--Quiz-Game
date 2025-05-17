@@ -220,4 +220,4 @@ skipButton.addEventListener("click", () => {
 });
 
 showQuestion();
-startTimer(60);
+startTimer(120);
