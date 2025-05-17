@@ -221,5 +221,3 @@ skipButton.addEventListener("click", () => {
 
 showQuestion();
 startTimer(60);
-
-//Have user name fields and show the score with the name
