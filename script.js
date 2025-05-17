@@ -118,12 +118,12 @@ function showQuestion() {
     previousButton.disabled = false;
   }
 }
- 
+
 function selectAnswer(selectedValue) {
   const answer = quizData[currentQuestionIndex].answer;
   userAnswer[currentQuestionIndex] = selectedValue;
   if (selectedValue === answer && currentQuestionIndex < quizData.length) {
-    score++; 
+    score++;
   }
   if (currentQuestionIndex < quizData.length) {
     // showQuestion();
@@ -135,7 +135,7 @@ function selectAnswer(selectedValue) {
 
 function showResult() {
   nextButton.disabled = true;
-  nextButton.innerText="Finish";
+  nextButton.innerText = "Finish";
   skipButton.disabled = true;
   previousButton.disabled = true;
   const resultMessage = document.createElement("div");
@@ -220,6 +220,6 @@ skipButton.addEventListener("click", () => {
 });
 
 showQuestion();
-//startTimer(50);
+startTimer(60);
 
 //Have user name fields and show the score with the name
