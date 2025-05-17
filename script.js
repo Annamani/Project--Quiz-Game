@@ -32,7 +32,11 @@ const quizData = [
   },
   {
     question: "Which political party emerged in 1870 as a part of the labour movement?",
-    options: ["The Social Liberals (Radikale Venstre)", "The Socialist People's Party (Socialistisk Folkeparti)","The Social Democrats (Socialdemokratiet)"],
+    options: [
+      "The Social Liberals (Radikale Venstre)",
+      "The Socialist People's Party (Socialistisk Folkeparti)",
+      "The Social Democrats (Socialdemokratiet)",
+    ],
     answer: "The Social Democrats (Socialdemokratiet)",
   },
   {
@@ -82,18 +86,15 @@ let currentQuestionIndex = 0;
 let score = 0;
 let timer;
 const timerValue = 120; //2 minutes for just to check for the quiz
-let userAnswer =Array(quizData.length).fill(null); 
+let userAnswer = Array(quizData.length).fill(null);
 // console.log("Quiz started!");
 
 // console.log(questionCounterElement);
-
-
 function showQuestion() {
   const question = quizData[currentQuestionIndex].question;
   const options = quizData[currentQuestionIndex].options;
   scoreElement.innerText = score;
-  questionCounterElement.innerHTML = `Question ${currentQuestionIndex + 1} / ${quizData.length
-    }`;
+  questionCounterElement.innerHTML = `Question ${currentQuestionIndex + 1} / ${quizData.length}`;
   console.log(question, options);
   questionElement.innerText = question;
   optionsElement.innerHTML = ""; // Clear previous options
@@ -101,10 +102,12 @@ function showQuestion() {
     const radioButton = document.createElement("input");
     radioButton.type = "radio";
     radioButton.innerText = option;
-    radioButton.name = "answer"; 
+    radioButton.name = "answer";
+    radioButton.checked = userAnswer[currentQuestionIndex] === option;
+
     const label = document.createElement("label");
     label.innerText = option;
-    label.prepend(radioButton); 
+    label.prepend(radioButton);
     // optionsElement.appendChild(radioButton);
     optionsElement.appendChild(label); // Append the label to the options element
     radioButton.addEventListener("click", () => selectAnswer(option));
@@ -115,12 +118,12 @@ function showQuestion() {
     previousButton.disabled = false;
   }
 }
-
+ 
 function selectAnswer(selectedValue) {
   const answer = quizData[currentQuestionIndex].answer;
-  if (selectedValue === answer) {
-    userAnswer[currentQuestionIndex] = selectedValue;
-    score++;
+  userAnswer[currentQuestionIndex] = selectedValue;
+  if (selectedValue === answer && currentQuestionIndex < quizData.length) {
+    score++; 
   }
   if (currentQuestionIndex < quizData.length) {
     // showQuestion();
@@ -132,6 +135,7 @@ function selectAnswer(selectedValue) {
 
 function showResult() {
   nextButton.disabled = true;
+  nextButton.innerText="Finish";
   skipButton.disabled = true;
   previousButton.disabled = true;
   const resultMessage = document.createElement("div");
@@ -148,20 +152,20 @@ function showResult() {
     resultMessage.style.color = "green";
     timerElement.innerText = "0";
     optionsElement.appendChild(resultMessage);
-  }
-  else {
+  } else {
     scoreElement.innerText = score;
     resultMessage.innerText = `Sorry !! You have failed the exam`;
     resultMessage.style.color = "red";
     timerElement.innerText = "0";
     optionsElement.appendChild(resultMessage);
   }
-showCorrectAnswers();
+  showCorrectAnswers();
 }
+
 function showCorrectAnswers() {
- resultElement.innerHTML = "<h2>Quiz Results: </h2>";
+  resultElement.innerHTML = "<h2>Quiz Results: </h2>";
   quizData.forEach((question, index) => {
-    const userAns= userAnswer[index]||"Not Attempted";
+    const userAns = userAnswer[index] || "Not Attempted";
     const isCorrect = userAns === question.answer ? "Correct" : "Incorrect";
     resultElement.innerHTML += `<p>Question ${index + 1}: ${question.question}</p>`;
     resultElement.innerHTML += `<p>Your Answer: ${userAns}</p>`;
@@ -177,8 +181,7 @@ function startTimer(duration) {
     timeLeft--;
     if (timeLeft >= 0) {
       timerElement.textContent = timeLeft;
-    } 
-    else {
+    } else {
       showResult();
     }
   }, 1000);
@@ -211,14 +214,12 @@ skipButton.addEventListener("click", () => {
   currentQuestionIndex++;
   if (currentQuestionIndex < quizData.length) {
     showQuestion();
-    
   } else {
     showResult();
   }
 });
 
 showQuestion();
-startTimer(50);
-
+//startTimer(50);
 
 //Have user name fields and show the score with the name
