@@ -118,7 +118,7 @@ function showQuestion() {
   } else {
     previousButton.disabled = false;
   }
-  }
+
 
 function selectAnswer(selectedValue) {
   const answer = quizData[currentQuestionIndex].answer;
