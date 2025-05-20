@@ -224,4 +224,4 @@ skipButton.addEventListener("click", () => {
 });
 
 showQuestion();
-startTimer(120);
+startTimer(120); //2 minutes
