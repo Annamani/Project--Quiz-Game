@@ -88,6 +88,7 @@ let timer;
 const timerValue = 120; //2 minutes for just to check for the quiz
 let userAnswer = Array(quizData.length).fill(null);
 // console.log("Quiz started!");
+let skippedQuestions=[];
 
 // console.log(questionCounterElement);
 function showQuestion() {
@@ -117,7 +118,7 @@ function showQuestion() {
   } else {
     previousButton.disabled = false;
   }
-}
+  }
 
 function selectAnswer(selectedValue) {
   const answer = quizData[currentQuestionIndex].answer;
@@ -132,7 +133,6 @@ function selectAnswer(selectedValue) {
     // showQuestion();
   }
 }
-
 function showResult() {
   nextButton.disabled = true;
   nextButton.innerText = "Finish";
@@ -190,11 +190,14 @@ nextButton.addEventListener("click", () => {
   currentQuestionIndex++;
   if (currentQuestionIndex < quizData.length) {
     showQuestion();
-  } else {
+  }else if(skippedQuestions.length > 0) {
+      currentQuestionIndex = skippedQuestions.shift();
+      showQuestion();
+  }else {
     nextButton.disabled = quizData.length === 0;
     showResult();
   }
-  if (currentQuestionIndex === quizData.length - 1) {
+  if (currentQuestionIndex === quizData.length - 1 && skippedQuestions.length === 0) {
     nextButton.innerText = "Finish";
     skipButton.disabled = true;
   } else {
@@ -211,6 +214,7 @@ previousButton.addEventListener("click", () => {
   }
 });
 skipButton.addEventListener("click", () => {
+  skippedQuestions.push(currentQuestionIndex);
   currentQuestionIndex++;
   if (currentQuestionIndex < quizData.length) {
     showQuestion();
