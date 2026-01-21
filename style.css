@@ -1,8 +1,21 @@
 body {
   font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
+  background-color: #f4d4d4;
   color: #333;
   height: 100vh;
+}
+
+#start-button {
+  display: block;
+  margin: 0 auto;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+#main-container {
+  display: none;
+  width: 60%;
+  margin: auto;
 }
 
 #quiz-container {
@@ -15,6 +28,7 @@ body {
   margin-top: 50px;
   border: 2px solid #4caf50;
 }
+
 h1 {
   background-color: #000;
   color: #fff;
@@ -29,10 +43,12 @@ h1 {
   background-color: #d5fac9;
   border-radius: 5px;
 }
+
 .option.selected {
   background-color: #4caf50;
   color: white;
 }
+
 #question {
   font-size: 20px;
   margin-top: 20px;
@@ -66,6 +82,7 @@ h1 {
   margin: auto;
   text-align: center;
 }
+
 button {
   background-color: #1e9ed1;
   color: white;

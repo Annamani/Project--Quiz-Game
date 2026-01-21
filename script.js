@@ -20,18 +20,21 @@ const quizData = [
     answer: "Danish Krone",
   },
   {
-    question: "Which country was Denmark forced to relinquish to Sweden at the end of the Napoleonic Wars in 1814?",
+    question:
+      "Which country was Denmark forced to relinquish to Sweden at the end of the Napoleonic Wars in 1814?",
     options: ["Norway", "Iceland", "Greenland"],
     // answeredCorrectly: false,
     answer: "Norway",
   },
   {
-    question: "On January 1st, 2007, Denmark was divided into regions. How many?",
+    question:
+      "On January 1st, 2007, Denmark was divided into regions. How many?",
     options: ["7", "13", "5"],
     answer: "5",
   },
   {
-    question: "Which political party emerged in 1870 as a part of the labour movement?",
+    question:
+      "Which political party emerged in 1870 as a part of the labour movement?",
     options: [
       "The Social Liberals (Radikale Venstre)",
       "The Socialist People's Party (Socialistisk Folkeparti)",
@@ -40,12 +43,14 @@ const quizData = [
     answer: "The Social Democrats (Socialdemokratiet)",
   },
   {
-    question: "Which of the following persons is known as a key figure amongst the Skagen painters?",
+    question:
+      "Which of the following persons is known as a key figure amongst the Skagen painters?",
     options: ["Berthel Thorvaldsen", "C. C. Eckersberg", "P. S. KrÃ¸yer"],
     answer: "P. S. KrÃ¸yer",
   },
   {
-    question: "What is the average age for women having their first child in Denmark?",
+    question:
+      "What is the average age for women having their first child in Denmark?",
     options: ["24", "29", "19"],
     answer: "29",
   },
@@ -60,19 +65,20 @@ const quizData = [
     answer: "1953",
   },
   {
-    question: "On which day does the Queen give a live televised speech to the country?",
+    question:
+      "On which day does the Queen give a live televised speech to the country?",
     options: ["New Years Eve", "Christmas Eve", "Queen Birthday"],
     answer: "New Years Eve",
   },
   {
-    question: "In which sport did the Danish women's national team finish second in the 2017 European Championships?",
+    question:
+      "In which sport did the Danish women's national team finish second in the 2017 European Championships?",
     options: ["Handball", "Football", "Volleyball"],
     answer: "Football",
   },
 ];
-//Shuffle the questions
-// quizData.sort(() => Math.random() - 0.5);
-// console.log(quizData.sort(() => Math.random() - 0.5));
+const startQuizButton = document.getElementById("start-button");
+const quizContainer = document.getElementById("main-container");
 const questionCounterElement = document.getElementById("question-counter");
 const questionElement = document.getElementById("question");
 const optionsElement = document.getElementById("options");
@@ -87,10 +93,12 @@ let score = 0;
 let timer;
 const timerValue = 120; //2 minutes for just to check for the quiz
 let userAnswer = Array(quizData.length).fill(null);
-// console.log("Quiz started!");
-let skippedQuestions=[];
+let skippedQuestions = [];
 
-// console.log(questionCounterElement);
+startQuizButton.addEventListener("click", () => {
+  quizContainer.style.display = "block";
+  startQuizButton.style.display = "none";
+});
 function showQuestion() {
   const question = quizData[currentQuestionIndex].question;
   const options = quizData[currentQuestionIndex].options;
@@ -98,7 +106,7 @@ function showQuestion() {
   questionCounterElement.innerHTML = `Question ${currentQuestionIndex + 1} / ${quizData.length}`;
   console.log(question, options);
   questionElement.innerText = question;
-  optionsElement.innerHTML = ""; // Clear previous options
+  optionsElement.innerHTML = "";
   options.forEach((option) => {
     const radioButton = document.createElement("input");
     radioButton.type = "radio";
@@ -109,8 +117,7 @@ function showQuestion() {
     const label = document.createElement("label");
     label.innerText = option;
     label.prepend(radioButton);
-    // optionsElement.appendChild(radioButton);
-    optionsElement.appendChild(label); // Append the label to the options element
+    optionsElement.appendChild(label);
     radioButton.addEventListener("click", () => selectAnswer(option));
   });
   if (currentQuestionIndex === 0) {
@@ -118,7 +125,7 @@ function showQuestion() {
   } else {
     previousButton.disabled = false;
   }
-  }
+}
 
 function selectAnswer(selectedValue) {
   const answer = quizData[currentQuestionIndex].answer;
@@ -167,10 +174,10 @@ function showCorrectAnswers() {
   quizData.forEach((question, index) => {
     const userAns = userAnswer[index] || "Not Attempted";
     const isCorrect = userAns === question.answer ? "Correct" : "Incorrect";
-    resultElement.innerHTML += `<p>Question ${index + 1}: ${question.question}</p>`;
-    resultElement.innerHTML += `<p>Your Answer: ${userAns}</p>`;
-    resultElement.innerHTML += `<p>Correct Answer: ${question.answer}</p>`;
-    resultElement.innerHTML += `<p>Status: ${isCorrect}</p>`;
+    resultElement.innerHTML += `<p><strong>Question ${index + 1}</strong>: ${question.question}</p>`;
+    resultElement.innerHTML += `<p><strong>Your Answer:</strong> ${userAns}</p>`;
+    resultElement.innerHTML += `<p><strong>Correct Answer:</strong> ${question.answer}</p>`;
+    resultElement.innerHTML += `<p><strong>Status:</strong> ${isCorrect}</p>`;
     resultElement.innerHTML += "<hr>";
     resultElement.appendChild(questionElement);
   });
@@ -190,14 +197,17 @@ nextButton.addEventListener("click", () => {
   currentQuestionIndex++;
   if (currentQuestionIndex < quizData.length) {
     showQuestion();
-  }else if(skippedQuestions.length > 0) {
-      currentQuestionIndex = skippedQuestions.shift();
-      showQuestion();
-  }else {
+  } else if (skippedQuestions.length > 0) {
+    currentQuestionIndex = skippedQuestions.shift();
+    showQuestion();
+  } else {
     nextButton.disabled = quizData.length === 0;
     showResult();
   }
-  if (currentQuestionIndex === quizData.length - 1 && skippedQuestions.length === 0) {
+  if (
+    currentQuestionIndex === quizData.length - 1 &&
+    skippedQuestions.length === 0
+  ) {
     nextButton.innerText = "Finish";
     skipButton.disabled = true;
   } else {
@@ -224,4 +234,4 @@ skipButton.addEventListener("click", () => {
 });
 
 showQuestion();
-startTimer(120); //2 minutes
+startTimer(120);
