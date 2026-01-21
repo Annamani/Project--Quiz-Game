@@ -186,9 +186,14 @@ function startTimer(duration) {
   let timeLeft = duration;
   timer = setInterval(() => {
     timeLeft--;
-    if (timeLeft >= 0) {
+    if (timeLeft === 15) {
+      timerElement.style.color = "red";
+      alert("Hurry up! Only 15 seconds left.");
+    }
+    else if (timeLeft >= 0) {
       timerElement.textContent = timeLeft;
-    } else {
+    }
+    else {
       showResult();
     }
   }, 1000);
